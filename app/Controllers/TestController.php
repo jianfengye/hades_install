@@ -2,10 +2,14 @@
 
 namespace App\Controllers\TestController;
 
-use Hades\Dao\Dao;
-
 class TestController extends Hades\Mvc\Controller
 {
+
+    public function test($request)
+    {
+        return new Response();
+    }
+
     public function index($request)
     {
         $user = \UserDao::find(1);
