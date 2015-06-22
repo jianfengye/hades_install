@@ -1,10 +1,10 @@
 <?php
 
 require __DIR__.'/../vendor/autoload.php';
+$app = require __DIR__.'/../app/bootstrap.php';
 
-$request = \Hades\Http\Request::create();
-
-$router = new \Hades\Route\Manager();
+$request = $app->make('Request');
+$router = $app->make('Router');
 
 $response = $router->dispatch($request);
 
