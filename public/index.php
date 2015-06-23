@@ -1,11 +1,10 @@
 <?php
 
 require __DIR__.'/../vendor/autoload.php';
-$app = require __DIR__.'/../app/bootstrap.php';
+global $container = require __DIR__.'/../app/bootstrap.php';
 
-$request = $app->make('Request');
-$router = $app->make('Router');
+$request = $container->make('Request');
 
-$response = $router->dispatch($request);
+$response = \Route::dispatch($request);
 
 $response->send();
