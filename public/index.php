@@ -1,7 +1,10 @@
 <?php
 
 require __DIR__.'/../vendor/autoload.php';
-global $container = require __DIR__.'/../app/bootstrap.php';
+
+global $container;
+
+$container = require __DIR__.'/../app/bootstrap.php';
 
 $request = $container->make('Request');
 

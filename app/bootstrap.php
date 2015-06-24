@@ -3,15 +3,20 @@
 // include container
 $app = new \Hades\Container\Container();
 
-$app->bind('Request', '\Hades\Http\Request');
-$app->singleton('Route', '\Hades\Route\Manager');
+$container = require __DIR__.'/../config/container.php';
 
-// if class not exist, check Container
-spl_autoload_register(function($contract) use ($app) {
-    // TODO: here will create an unused class
-    if ($app->have($class)) {
-        return $app->make($contract);
+if (isset($container['bind'])) {
+    foreach ($container['bind'] as $key => $value) {
+        $app->bind($key, $value);
     }
-});
+}
+
+if (isset($container['singleton'])) {
+    foreach ($container['singleton'] as $key => $value) {
+        $app->singleton($key, $value);
+    }
+}
+
+require __DIR__. '/../config/route.php';
 
 return $app;
