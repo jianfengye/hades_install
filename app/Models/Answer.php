@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Answer extends Hades\Dao\Row
+class Answer extends \Hades\Dao\Model
 {
     // getName
     public function getName()

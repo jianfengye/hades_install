@@ -1,13 +1,21 @@
 <?php
+require __DIR__.'/../app/bootstrap.php';
 
-require __DIR__.'/../vendor/autoload.php';
+$app = \Hades\Container\Container::instance();
 
-global $container;
+$request = $app->make('Request');
 
-$container = require __DIR__.'/../app/bootstrap.php';
+// if request is js or css
+$pathinfo = pathinfo($request->uri());
+if (isset($pathinfo['extension']) && in_array($pathinfo['extension'], ['js', 'css'])) {
+    $response = new \Response();
 
-$request = $container->make('Request');
+    $response->setStatusCode(404);
+    return $response->send();
+}
 
 $response = \Route::dispatch($request);
 
-$response->send();
+if ($response instanceof \Hades\Http\Response) {
+    $response->send();
+}

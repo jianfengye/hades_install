@@ -1,42 +1,32 @@
 <?php
 
 // include container
-$app = new \Hades\Container\Container();
+define('HADES_ROOT', __DIR__ . '/../');
 
-$container = require __DIR__.'/../config/container.php';
-\Hades\Config\Config::setFolder(__DIR__.'/../config/';)
+require __DIR__.'/../vendor/autoload.php';
 
-if (isset($container['bind'])) {
-    foreach ($container['bind'] as $key => $value) {
-        $app->bind($key, $value);
-        class_alias($value, $key);
-    }
-}
+\Hades\Config\Config::setFolder(__DIR__.'/../config/');
+\Hades\Log\Logger::setFolder(HADES_ROOT.'/storage/log/');
+\Hades\Log\Logger::rotate(30);
+\Hades\Config\Config::local(HADES_ROOT . '/.env.php');
 
-if (isset($container['singleton'])) {
-    foreach ($container['singleton'] as $key => $value) {
-        $app->singleton($key, $value);
-        class_alias($value, $key);
-    }
-}
+$container = \Hades\Container\Container::instance();
+$container->load(require(HADES_ROOT.'/config/container.php'));
+\Hades\Dao\Register::load($container, require(HADES_ROOT . '/config/dao.php'));
 
+/*
 spl_autoload_register(function($class){
-    // if end by Dao
-    if (substr($class, -3) == 'Dao') {
-        class_alias('\Hades\Dao\Dao', $class);
-        $table = \Hades\Utils\String::fromCamlCase(substr($class, 0, -3));
-        \Hades\Dao\Dao::setTable($table);
+    if (\Hades\Container\Container::instance()->have($class)) {
+        \Hades\Container\Container::instance()->alias($class);
     }
+});
+*/
 
-    if (substr($class, -5) == 'Model') {
-        $table = \Hades\Utils\String::fromCamlCase(substr($class, 0, -5));
-        $modelName = \Hades\Dao\DaoHelper::modelName($table);
 
-        class_alias($modelName, $class);
-        $modelName::setTable($table);
-    }
+set_exception_handler(function($exception){
+    $handler =  new App\Exceptions\ExceptionHandler($exception);
+    $response = $handler->render();
+    $response->send();
 });
 
 require __DIR__. '/../config/route.php';
-
-return $app;

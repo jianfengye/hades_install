@@ -1,24 +1,23 @@
 <?php
 
 return [
+
     "database" => [
         "master1" => [
-            "host" => '127.0.0.1',
-            "port" => '6000',
-            'pass' => '1234',
-            'user' => 'yejianfeng',
+            "hostname" => '127.0.0.1',
+            "driver" => 'mysql',
+            "port" => '3307',
+            'password' => '',
+            'username' => 'root',
+            'database' => 'hades',
         ],
         "slave1" => [
-            "host" => '127.0.0.1',
-            "port" => '6000',
-            'pass' => '1234',
-            'user' => 'yejianfeng',
-        ],
-        "salve2" => [
-            "host" => '127.0.0.1',
-            "port" => '6000',
-            'pass' => '1234',
-            'user' => 'yejianfeng',
+            "hostname" => '127.0.0.1',
+            "driver" => 'mysql',
+            "port" => '3307',
+            'password' => '',
+            'username' => 'root',
+            'database' => 'hades',
         ]
     ],
 
@@ -27,8 +26,7 @@ return [
             "master1",
         ],
         "slave" => [
-            "slave1",
-            "slave2"
+            "slave1"
         ],
     ]
 ];
