@@ -28,11 +28,11 @@ Hades是一款容易上手的PHP框架，它在很大程度上借鉴了laravel�
 
     server {
             listen       80;
-            server_name develop.baichebao.cn;
-            access_log /tmp/develop.baichebao.cn.access.log logstash;
-            error_log /tmp/develop.baichebaocn.error.log notice;
+            server_name hades.cn;
+            access_log /tmp/hades.cn.access.log logstash;
+            error_log /tmp/hades.error.log notice;
 
-            root /mnt/www/develop/public/;
+            root /mnt/www/hades/public/;
             index index.php;
 
             location ~ \.php$ {
